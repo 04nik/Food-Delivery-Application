@@ -1,0 +1,117 @@
+{% extends 'customer/base.html' %}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <!-- Back Button -->
+    <div class="row pt-4 mb-3">
+        <div class="col-md-12">
+            <a href="{% url 'dashboard' %}" class="btn btn-light font-weight-bold px-3 shadow-sm" style="border-radius: 20px;">
+                <i class="fas fa-arrow-left mr-2"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Left Column: Customer & Delivery Details -->
+        <div class="col-md-6 mb-4">
+            <div class="card border-0 shadow-sm p-4" style="border-radius: 12px; height: 100%;">
+                <h3 class="font-weight-bold mb-4" style="color: #2b3a42;">Order & Delivery Info</h3>
+                
+                <div class="mb-4">
+                    <p class="text-uppercase text-muted font-weight-bold small mb-1">Customer Name</p>
+                    <p class="h5 font-weight-bold text-dark">{{ order.name }}</p>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-uppercase text-muted font-weight-bold small mb-1">Email Address</p>
+                    <p class="h6 text-primary">{{ order.email }}</p>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-uppercase text-muted font-weight-bold small mb-1">Delivery Address</p>
+                    <p class="text-dark mb-0 font-weight-bold">{{ order.street }}</p>
+                    <p class="text-dark">{{ order.city }}, {{ order.state }} {{ order.zip_code }}</p>
+                </div>
+
+                <div class="mb-4">
+                    <p class="text-uppercase text-muted font-weight-bold small mb-1">Order Placed At</p>
+                    <p class="text-dark font-weight-bold">{{ order.created_on|date:"F d, Y - h:i A" }}</p>
+                </div>
+
+                <div class="d-flex flex-row justify-content-between align-items-center mt-3 pt-3 border-top">
+                    <div>
+                        <p class="text-uppercase text-muted font-weight-bold small mb-1">Payment Status</p>
+                        {% if order.is_paid %}
+                            <span class="badge badge-success px-3 py-2 font-weight-bold" style="border-radius: 30px; font-size: 0.9rem;">Paid</span>
+                        {% else %}
+                            <span class="badge badge-danger px-3 py-2 font-weight-bold" style="border-radius: 30px; font-size: 0.9rem;">Unpaid</span>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <p class="text-uppercase text-muted font-weight-bold small mb-1">Delivery Status</p>
+                        {% if order.is_shipped %}
+                            <span class="badge badge-success px-3 py-2 font-weight-bold" style="border-radius: 30px; font-size: 0.9rem;">Delivered</span>
+                        {% else %}
+                            <span class="badge badge-warning px-3 py-2 text-dark font-weight-bold" style="border-radius: 30px; font-size: 0.9rem;">Pending</span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Update Status Forms -->
+                {% if not order.is_paid or not order.is_shipped %}
+                <div class="mt-5 pt-3 border-top">
+                    <h5 class="font-weight-bold mb-3" style="color: #2b3a42;">Update Order Status</h5>
+                    <form method="POST" class="d-flex flex-column gap-2">
+                        {% csrf_token %}
+                        {% if not order.is_paid %}
+                        <button type="submit" name="paid" class="btn btn-success btn-block font-weight-bold py-2 mb-2 shadow-sm" style="border-radius: 8px;">
+                            <i class="fas fa-check-circle mr-2"></i> Mark as Paid
+                        </button>
+                        {% endif %}
+                        {% if not order.is_shipped %}
+                        <button type="submit" name="shipped" class="btn btn-primary btn-block font-weight-bold py-2 shadow-sm" style="border-radius: 8px;">
+                            <i class="fas fa-shipping-fast mr-2"></i> Mark as Shipped/Delivered
+                        </button>
+                        {% endif %}
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Right Column: Ordered Items Summary -->
+        <div class="col-md-6 mb-4">
+            <div class="card border-0 shadow-sm p-4" style="border-radius: 12px; height: 100%;">
+                <h3 class="font-weight-bold mb-4" style="color: #2b3a42;">Items Ordered</h3>
+                
+                <div class="table-responsive">
+                    <table class="table table-borderless align-middle">
+                        <tbody>
+                            {% for item in order.items.all %}
+                            <tr class="border-bottom">
+                                <td style="width: 80px;" class="py-3">
+                                    {% if item.image %}
+                                        <img src="{{ item.image.url }}" class="rounded shadow-sm" width="60" height="45" style="object-fit: cover;" />
+                                    {% endif %}
+                                </td>
+                                <td class="py-3">
+                                    <h6 class="font-weight-bold text-dark mb-0">{{ item.name }}</h6>
+                                    <small class="text-muted">₹{{ item.price }}</small>
+                                </td>
+                                <td class="py-3 text-right font-weight-bold">
+                                    ₹{{ item.price }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <td colspan="2" class="pt-4 font-weight-bold h5 text-dark">Total Price:</td>
+                                <td class="pt-4 text-right font-weight-bold h5 text-success">₹{{ order.price }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

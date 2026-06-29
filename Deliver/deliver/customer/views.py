@@ -112,7 +112,7 @@ class OrderConfirmation(View):
 
         if data['isPaid']:
             order=OrderModel.objects.get(pk=pk)
-            order.is_Paid= True
+            order.is_paid = True
             order.save()
 
         return redirect('payment-confirmation')

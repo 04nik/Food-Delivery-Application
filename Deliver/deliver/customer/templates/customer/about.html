@@ -1,18 +1,116 @@
 {% extends 'customer/base.html' %}
 
 {% block content %}
-<div class="container mb-5">
-    <div class="row justify-content-center mt-5">
-        <div class="col-md-8 col-sm-12 offset-md-1 p-4 text-center">
-            <h1>About Us!</h1>
+<style>
+    .about-header {
+        background: linear-gradient(135deg, #1a237e, #3f51b5);
+        color: white;
+        padding: 80px 0;
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 50px;
+    }
+    
+    .about-img {
+        border-radius: 16px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        object-fit: cover;
+        width: 100%;
+        height: 380px;
+    }
+    
+    .value-card {
+        border: none;
+        border-radius: 12px;
+        transition: all 0.3s ease-in-out;
+        background-color: #f8f9fa;
+        height: 100%;
+    }
+    
+    .value-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+        background-color: #fff;
+    }
+    
+    .value-icon {
+        font-size: 2rem;
+        color: #3f51b5;
+        margin-bottom: 15px;
+    }
+</style>
+
+<!-- Banner Hero Section -->
+<div class="about-header text-center">
+    <div class="container">
+        <h1 class="display-4 font-weight-bold mb-3">About Deliver</h1>
+        <p class="lead text-white-50 max-width-600 mx-auto">We connect food lovers with fresh, gourmet meals prepared by top culinary experts and delivered hot to your doorstep.</p>
+    </div>
+</div>
+
+<div class="container mb-5 pb-5">
+    <!-- Our Story Section -->
+    <div class="row align-items-center mb-5 pb-4">
+        <div class="col-md-6 pr-md-5 mb-4 mb-md-0">
+            <h2 class="font-weight-bold mb-4" style="color: #2b3a42;">Our Culinary Story</h2>
+            <p class="text-muted" style="line-height: 1.8;">
+                Founded with a simple mission to redefine convenient dining, <strong>Deliver</strong> bridges the gap between gourmet restaurants and your dining table. We believe that good food shouldn't be compromised by a busy schedule.
+            </p>
+            <p class="text-muted" style="line-height: 1.8;">
+                Every dish ordered through our platform is prepared fresh using hand-selected ingredients. Our dedicated delivery professionals ensure your meal arrives piping hot, fresh, and on time. Whether you're craving a robust cheese burger, fresh wood-fired pizza, or a decadent dessert, we have you covered.
+            </p>
         </div>
-    </div>   
-    <div class="row justify-content-center mt-1">
-        <div class="col-md-10 col-sm-12 offset-md-1 p-4 text-center">
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus.</p>
-            <p>Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc, quis gravida magna mi a libero. Fusce vulputate eleifend sapien.</p>
-            <p>Vestibulum purus quam, scelerisque ut, mollis sed, nonummy id, metus. Nullam accumsan lorem in dui. Cras ultricies mi eu turpis hendrerit fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; In ac dui quis mi consectetuer lacinia. Nam pretium turpis et arcu. Duis arcu tortor, suscipit eget, imperdiet nec, imperdiet iaculis, ipsum. Sed aliquam ultrices mauris. Integer ante arcu, accumsan a, consectetuer eget, posuere ut, mauris. Praesent adipiscing. Phasellus ullamcorper ipsum rutrum nunc. Nunc nonummy metus. Vestibulum volutpat pretium libero. Cras id dui. Aenean ut eros et nisl sagittis vestibulum. Nullam nulla eros, ultricies sit amet, nonummy id, imperdiet feugiat, pede. Sed lectus. Donec mollis hendrerit risus. Phasellus nec sem in justo pellentesque facilisis. Etiam imperdiet imperdiet orci. Nunc nec neque. Phasellus leo dolor, tempus non, auctor et, hendrerit quis, nisi. Curabitur ligula sapien, tincidunt non, euismod vitae, posuere imperdiet, leo. Maecenas malesuada. Praesent congue erat at massa. Sed cursus turpis vitae tortor. Donec posuere vulputate arcu. Phasellus accumsan cursus velit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, nisi quis porttitor congue, elit erat euismod orci, ac</p>
+        <div class="col-md-6">
+            <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=800&q=80" alt="Kitchen Cooking" class="about-img" />
         </div>
-    </div>        
+    </div>
+
+    <!-- Core Values Section -->
+    <div class="row justify-content-center text-center mt-5 mb-4">
+        <div class="col-md-8">
+            <h2 class="font-weight-bold" style="color: #2b3a42;">Our Core Values</h2>
+            <p class="text-muted">What drives us to deliver the best culinary experience to you daily.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Value 1 -->
+        <div class="col-md-4 mb-4">
+            <div class="card value-card p-4 text-center">
+                <div class="card-body">
+                    <div class="value-icon">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h5 class="font-weight-bold text-dark mb-3">Fresh Ingredients</h5>
+                    <p class="text-muted small mb-0">We work directly with certified vendors to secure organic vegetables, premium meats, and dairy daily.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Value 2 -->
+        <div class="col-md-4 mb-4">
+            <div class="card value-card p-4 text-center">
+                <div class="card-body">
+                    <div class="value-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h5 class="font-weight-bold text-dark mb-3">Customer First</h5>
+                    <p class="text-muted small mb-0">From easy online selection to flexible Cash on Delivery payment options, customer satisfaction is our top priority.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Value 3 -->
+        <div class="col-md-4 mb-4">
+            <div class="card value-card p-4 text-center">
+                <div class="card-body">
+                    <div class="value-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h5 class="font-weight-bold text-dark mb-3">Speedy Delivery</h5>
+                    <p class="text-muted small mb-0">Our optimization algorithms route delivery partners efficiently to ensure hot food reaches you in record time.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock content %}

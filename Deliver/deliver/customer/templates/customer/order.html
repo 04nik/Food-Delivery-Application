@@ -1,159 +1,329 @@
 {% extends 'customer/base.html' %}
 
 {% block content %}
-<div class="container mb-5">
-    <div class="row justify-content-center mt-1">
-        <div class="col-md-12 col-sm-12 p-4">
-            <form method="POST">
-                {% csrf_token %}
-                <div class="pt-5">
-                    {% for app in appetizers %}
-                    <div class="row">
-                        <div class="col-md-2 col-sm-12">
-                            <img class="rounded" src="{{ app.image.url }}" width="150" height="100"/>
-                        </div>
-                        <div class="col-md-8 col-sm-12">
-                            <div class="d-flex flex-row">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" name="items[]" class="form-check-input" value="{{ app.pk }}">
-                                    <label class="form-check-label">{{ app.name }}</label>
-                                </div>
-                                <p class="font-weight-bold pl-5">{{ app.price }}</p>
-                            </div>
-                            <p>{{ app.description }}</p>
-                        </div>
-                    </div>
-                    <hr />
-                {% endfor %}
-                </div>
+<style>
+    .menu-item-row {
+        transition: all 0.2s ease-in-out;
+        border-radius: 8px;
+        cursor: pointer;
+        border: 1px solid transparent;
+    }
+    .menu-item-row:hover {
+        background-color: #f8f9fa;
+        border-color: #e9ecef;
+        transform: translateY(-2px);
+    }
+    .form-check-input {
+        cursor: pointer;
+        width: 1.25rem;
+        height: 1.25rem;
+    }
+    .form-check-label {
+        cursor: pointer;
+        padding-left: 0.5rem;
+    }
+</style>
 
-                <div class="pt-5">
-                    {% for entre in entres %}
-                    <div class="row mt-4">
-                        <div class="col-md-2 col-sm-12">
-                            <img class="rounded" src="{{ entre.image.url }}" width="150" height="100"/>
-                        </div>
-                        <div class="col-md-8 col-sm-12">
-                            <div class="d-flex flex-row">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" name="items[]" class="form-check-input" value="{{ entre.pk }}">
-                                    <label class="form-check-label">{{ entre.name }}</label>
-                                </div>
-                                <p class="font-weight-bold pl-5">{{ entre.price }}</p>
-                            </div>
-                            <p>{{ entre.description }}</p>
-                        </div>
-                    </div>
-                    <hr />
-                    {% endfor %}
-                </div>
-
-                <div class="pt-5">
-                    {% for dessert in desserts %}
-                    <div class="row mt-4">
-                        <div class="col-md-2 col-sm-12">
-                            <img class="rounded" src="{{ dessert.image.url }}" width="150" height="100"/>
-                        </div>
-                        <div class="col-md-8 col-sm-12">
-                            <div class="d-flex flex-row">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" name="items[]" class="form-check-input" value="{{ dessert.pk }}">
-                                    <label class="form-check-label">{{ dessert.name }}</label>
-                                </div>
-                                <p class="font-weight-bold pl-5">{{ dessert.price }}</p>
-                            </div>
-                            <p>{{ dessert.description }}</p>
-                        </div>
-                    </div>
-                    <hr />
-                    {% endfor %}
-                </div>
-
-                <div class="pt-5">
-                    {% for drink in drinks %}
-                    <div class="row mt-4">
-                        <div class="col-md-2 col-sm-12">
-                            <img class="rounded" src="{{ drink.image.url }}" width="150" height="100"/>
-                        </div>
-                        <div class="col-md-8 col-sm-12">
-                            <div class="d-flex flex-row">
-                                <div class="form-group form-check">
-                                    <input type="checkbox" name="items[]" class="form-check-input" value="{{ drink.pk }}">
-                                    <label class="form-check-label">{{ drink.name }}</label>
-                                </div>
-                                <p class="font-weight-bold pl-5">{{ drink.price }}</p>
-                            </div>
-                            <p>{{ drink.description }}</p>
-                        </div>
-                    </div>
-                    <hr />
-                    {% endfor %}
-                </div>
-
-                <div class="form-group pt-3">
-                    <label for="name">Full Name</label>
-                    <input required class="form-control" type="text" placeholder="Your Name" name="name" />
-                </div>
-
-                <div class="form-group pt-3">
-                    <label for="name">Email Address</label>
-                    <input required class="form-control" type="text" placeholder="example@company.com" name="email" />
-                </div>
-
-                <div class="form-group pt-3">
-                    <label for="name">Street Address</label>
-                    <input required class="form-control" type="text" placeholder="1234 Main St" name="street" />
-                </div>
-
-                <div class="row">
-                    <div class="col-md-4 col-sm-12">
-                        <div class="form-group pt-3">
-                            <label for="name">City</label>
-                            <input required class="form-control" type="text" placeholder="San Francisco" name="city" />
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-12">
-                        <div class="form-group pt-3">
-                            <label for="name">State</label>
-                            <input required class="form-control" type="text" placeholder="CA" name="state" />
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-12">
-                        <div class="form-group pt-3">
-                            <label for="name">Zip Code</label>
-                            <input required class="form-control" type="text" placeholder="94117" name="zip" />
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Button trigger modal -->
-                <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#submitModal">
-                  Submit Order!
-                </button>
-                <!-- <button class="btn btn-dark mt-5">Place Order!</button> -->
-
-                <!-- Modal -->
-                <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="submitModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="submitModalLabel">Submit Your Order!</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Go Back</button>
-                        <button type="submit" class="btn btn-dark">Place Order!</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-            </form>
+<div class="container mb-5 mt-4">
+    <div class="row mb-4">
+        <div class="col-md-12 text-center text-md-left">
+            <h1 class="font-weight-bold" style="color: #2b3a42;">Browse Menu & Order</h1>
+            <p class="text-muted">Select items from the menu, review them in your cart summary, and fill in delivery details</p>
         </div>
     </div>
+
+    <form method="POST" id="order-form">
+        {% csrf_token %}
+        <div class="row">
+            <!-- Left Column: Menu Items List (col-md-8) -->
+            <div class="col-md-8 col-sm-12">
+                
+                <!-- Appetizers Category -->
+                {% if appetizers %}
+                <div class="mb-5">
+                    <h3 class="font-weight-bold mb-3" style="color: #3f51b5; border-bottom: 2px solid #3f51b5; padding-bottom: 8px;">Appetizers</h3>
+                    {% for app in appetizers %}
+                    <div class="row menu-item-row p-3 mb-2" id="row-{{ app.pk }}">
+                        <div class="col-md-3 col-sm-12 mb-2 mb-md-0">
+                            {% if app.image %}
+                            <img class="rounded shadow-sm" src="{{ app.image.url }}" style="width: 100%; height: 90px; object-fit: cover;" />
+                            {% endif %}
+                        </div>
+                        <div class="col-md-9 col-sm-12">
+                            <div class="d-flex flex-row justify-content-between align-items-center mb-2">
+                                <div class="form-group form-check mb-0">
+                                    <input type="checkbox" name="items[]" class="form-check-input menu-item-checkbox" value="{{ app.pk }}" data-price="{{ app.price }}" data-name="{{ app.name }}">
+                                    <label class="form-check-label font-weight-bold h5 text-dark mb-0">{{ app.name }}</label>
+                                </div>
+                                <span class="font-weight-bold text-success h5 mb-0">₹{{ app.price }}</span>
+                            </div>
+                            <p class="text-muted small mb-0">{{ app.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Entrees Category -->
+                {% if entres %}
+                <div class="mb-5">
+                    <h3 class="font-weight-bold mb-3" style="color: #3f51b5; border-bottom: 2px solid #3f51b5; padding-bottom: 8px;">Entrees</h3>
+                    {% for entre in entres %}
+                    <div class="row menu-item-row p-3 mb-2" id="row-{{ entre.pk }}">
+                        <div class="col-md-3 col-sm-12 mb-2 mb-md-0">
+                            {% if entre.image %}
+                            <img class="rounded shadow-sm" src="{{ entre.image.url }}" style="width: 100%; height: 90px; object-fit: cover;" />
+                            {% endif %}
+                        </div>
+                        <div class="col-md-9 col-sm-12">
+                            <div class="d-flex flex-row justify-content-between align-items-center mb-2">
+                                <div class="form-group form-check mb-0">
+                                    <input type="checkbox" name="items[]" class="form-check-input menu-item-checkbox" value="{{ entre.pk }}" data-price="{{ entre.price }}" data-name="{{ entre.name }}">
+                                    <label class="form-check-label font-weight-bold h5 text-dark mb-0">{{ entre.name }}</label>
+                                </div>
+                                <span class="font-weight-bold text-success h5 mb-0">₹{{ entre.price }}</span>
+                            </div>
+                            <p class="text-muted small mb-0">{{ entre.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Desserts Category -->
+                {% if desserts %}
+                <div class="mb-5">
+                    <h3 class="font-weight-bold mb-3" style="color: #3f51b5; border-bottom: 2px solid #3f51b5; padding-bottom: 8px;">Desserts</h3>
+                    {% for dessert in desserts %}
+                    <div class="row menu-item-row p-3 mb-2" id="row-{{ dessert.pk }}">
+                        <div class="col-md-3 col-sm-12 mb-2 mb-md-0">
+                            {% if dessert.image %}
+                            <img class="rounded shadow-sm" src="{{ dessert.image.url }}" style="width: 100%; height: 90px; object-fit: cover;" />
+                            {% endif %}
+                        </div>
+                        <div class="col-md-9 col-sm-12">
+                            <div class="d-flex flex-row justify-content-between align-items-center mb-2">
+                                <div class="form-group form-check mb-0">
+                                    <input type="checkbox" name="items[]" class="form-check-input menu-item-checkbox" value="{{ dessert.pk }}" data-price="{{ dessert.price }}" data-name="{{ dessert.name }}">
+                                    <label class="form-check-label font-weight-bold h5 text-dark mb-0">{{ dessert.name }}</label>
+                                </div>
+                                <span class="font-weight-bold text-success h5 mb-0">₹{{ dessert.price }}</span>
+                            </div>
+                            <p class="text-muted small mb-0">{{ dessert.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Drinks Category -->
+                {% if drinks %}
+                <div class="mb-5">
+                    <h3 class="font-weight-bold mb-3" style="color: #3f51b5; border-bottom: 2px solid #3f51b5; padding-bottom: 8px;">Drinks</h3>
+                    {% for drink in drinks %}
+                    <div class="row menu-item-row p-3 mb-2" id="row-{{ drink.pk }}">
+                        <div class="col-md-3 col-sm-12 mb-2 mb-md-0">
+                            {% if drink.image %}
+                            <img class="rounded shadow-sm" src="{{ drink.image.url }}" style="width: 100%; height: 90px; object-fit: cover;" />
+                            {% endif %}
+                        </div>
+                        <div class="col-md-9 col-sm-12">
+                            <div class="d-flex flex-row justify-content-between align-items-center mb-2">
+                                <div class="form-group form-check mb-0">
+                                    <input type="checkbox" name="items[]" class="form-check-input menu-item-checkbox" value="{{ drink.pk }}" data-price="{{ drink.price }}" data-name="{{ drink.name }}">
+                                    <label class="form-check-label font-weight-bold h5 text-dark mb-0">{{ drink.name }}</label>
+                                </div>
+                                <span class="font-weight-bold text-success h5 mb-0">₹{{ drink.price }}</span>
+                            </div>
+                            <p class="text-muted small mb-0">{{ drink.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+            </div>
+
+            <!-- Right Column: Interactive Order Summary & Address details (col-md-4) -->
+            <div class="col-md-4 col-sm-12">
+                <div class="sticky-top pt-2" style="top: 20px; z-index: 10;">
+                    
+                    <!-- Selected Items Summary -->
+                    <div class="card border-0 shadow-sm p-4 mb-4" style="border-radius: 12px; background-color: #fff;">
+                        <h4 class="font-weight-bold mb-3" style="color: #2b3a42;">
+                            <i class="fas fa-shopping-basket text-primary mr-2"></i>Cart Summary
+                        </h4>
+                        <div id="selected-items-list" class="mb-3" style="max-height: 250px; overflow-y: auto;">
+                            <p class="text-muted mb-0 small">No items selected yet. Choose items from the left menu.</p>
+                        </div>
+                        <hr />
+                        <div class="d-flex justify-content-between font-weight-bold h5 mb-0">
+                            <span>Total Price:</span>
+                            <span class="text-success" id="order-total-price">₹0.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Details Card -->
+                    <div class="card border-0 shadow-sm p-4" style="border-radius: 12px; background-color: #fff;">
+                        <h4 class="font-weight-bold mb-3" style="color: #2b3a42;">
+                            <i class="fas fa-truck text-primary mr-2"></i>Delivery Info
+                        </h4>
+                        
+                        <div class="form-group mb-3">
+                            <label class="font-weight-bold small text-muted mb-1" for="name">Full Name</label>
+                            <input required class="form-control form-control-sm" type="text" placeholder="Your Name" name="name" style="border-radius: 6px;" />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="font-weight-bold small text-muted mb-1" for="email">Email Address</label>
+                            <input required class="form-control form-control-sm" type="email" placeholder="example@company.com" name="email" style="border-radius: 6px;" />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label class="font-weight-bold small text-muted mb-1" for="street">Street Address</label>
+                            <input required class="form-control form-control-sm" type="text" placeholder="1234 Main St" name="street" style="border-radius: 6px;" />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 pr-1">
+                                <div class="form-group mb-3">
+                                    <label class="font-weight-bold small text-muted mb-1" for="city">City</label>
+                                    <input required class="form-control form-control-sm" type="text" placeholder="Sunnyvale" name="city" style="border-radius: 6px;" />
+                                </div>
+                            </div>
+                            <div class="col-md-6 pl-1">
+                                <div class="form-group mb-3">
+                                    <label class="font-weight-bold small text-muted mb-1" for="state">State</label>
+                                    <input required class="form-control form-control-sm" type="text" placeholder="CA" name="state" style="border-radius: 6px;" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label class="font-weight-bold small text-muted mb-1" for="zip">Zip Code</label>
+                            <input required class="form-control form-control-sm" type="number" placeholder="94085" name="zip" style="border-radius: 6px;" />
+                        </div>
+
+                        <!-- Button trigger modal -->
+                        <button type="button" id="submit-btn" class="btn btn-dark btn-block font-weight-bold py-3 shadow-sm" style="border-radius: 8px;" disabled>
+                            Submit Order!
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit Modal -->
+        <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="submitModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content border-0 shadow" style="border-radius: 12px;">
+                    <div class="modal-header bg-dark text-white" style="border-top-left-radius: 12px; border-top-right-radius: 12px;">
+                        <h5 class="modal-title font-weight-bold" id="submitModalLabel">Submit Your Order!</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body text-center p-4">
+                        <i class="fas fa-utensils fa-3x text-primary mb-3"></i>
+                        <h4 class="font-weight-bold mb-2">Are you ready to order?</h4>
+                        <p class="text-muted">Clicking "Place Order!" will submit your delivery details and items to our kitchen.</p>
+                    </div>
+                    <div class="modal-footer border-0 d-flex justify-content-between p-3 bg-light" style="border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;">
+                        <button type="button" class="btn btn-outline-secondary font-weight-bold px-4" data-dismiss="modal" style="border-radius: 6px;">Go Back</button>
+                        <button type="submit" class="btn btn-dark font-weight-bold px-4" style="border-radius: 6px;">Place Order!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const checkboxes = document.querySelectorAll(".menu-item-checkbox");
+    const selectedList = document.getElementById("selected-items-list");
+    const totalPriceEl = document.getElementById("order-total-price");
+    const submitBtn = document.getElementById("submit-btn");
+
+    function updateSummary() {
+        let total = 0;
+        let selectedHTML = "";
+        let count = 0;
+
+        checkboxes.forEach(cb => {
+            const row = cb.closest(".menu-item-row");
+            if (cb.checked) {
+                count++;
+                const price = parseFloat(cb.getAttribute("data-price"));
+                const name = cb.getAttribute("data-name");
+                total += price;
+                selectedHTML += `
+                    <div class="d-flex justify-content-between align-items-center mb-2 bg-light p-2 rounded">
+                        <span class="font-weight-bold text-dark text-truncate small" style="max-width: 150px;">
+                            <i class="fas fa-check-circle text-success mr-1"></i> ${name}
+                        </span>
+                        <span class="font-weight-bold text-dark small">₹${price.toFixed(2)}</span>
+                    </div>
+                `;
+                
+                // Add highlight class
+                if (row) {
+                    row.classList.add("bg-light");
+                    row.style.borderColor = "#3f51b5";
+                    row.style.borderLeft = "4px solid #3f51b5";
+                }
+            } else {
+                // Remove highlight class
+                if (row) {
+                    row.classList.remove("bg-light");
+                    row.style.borderColor = "transparent";
+                    row.style.borderLeft = "none";
+                }
+            }
+        });
+
+        if (count === 0) {
+            selectedList.innerHTML = '<p class="text-muted mb-0 small">No items selected yet. Choose items from the left menu.</p>';
+            submitBtn.disabled = true;
+        } else {
+            selectedList.innerHTML = selectedHTML;
+            submitBtn.disabled = false;
+        }
+
+        totalPriceEl.textContent = `₹${total.toFixed(2)}`;
+    }
+
+    checkboxes.forEach(cb => {
+        cb.addEventListener("change", updateSummary);
+    });
+
+    // Make row clickable to toggle checkbox
+    document.querySelectorAll(".menu-item-row").forEach(row => {
+        row.addEventListener("click", function(e) {
+            // Ignore click if it came directly from the input or label
+            if (e.target.tagName !== "INPUT" && e.target.tagName !== "LABEL") {
+                const cb = row.querySelector(".menu-item-checkbox");
+                if (cb) {
+                    cb.checked = !cb.checked;
+                    updateSummary();
+                }
+            }
+        });
+    });
+
+    // Trigger modal on submitBtn click after validating form
+    submitBtn.addEventListener("click", function() {
+        const form = document.getElementById("order-form");
+        if (form.checkValidity()) {
+            $("#submitModal").modal("show");
+        } else {
+            form.reportValidity();
+        }
+    });
+
+    updateSummary();
+});
+</script>
 {% endblock content %}
