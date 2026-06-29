@@ -1,4 +1,4 @@
-# upskillcampus
+# Food Delivery Application
 
 This is a web-based Food Delivery Application developed using **Python** and **Django**. The project provides an online platform where users can browse food items, add them to cart, and place orders easily.
 
